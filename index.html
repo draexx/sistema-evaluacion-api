@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Evaluación</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistema de Evaluación - Estructuras de Datos</h1>
+            <div class="student-info">
+                <select id="studentId" class="student-select">
+                    <option value="">Seleccione un estudiante</option>
+                </select>
+            </div>
+        </header>
+
+        <main id="questionsContainer">
+            <!-- Las preguntas se cargarán dinámicamente aquí -->
+        </main>
+
+        <div class="actions">
+            <button id="submitBtn" class="btn primary">Enviar Respuestas</button>
+            <button id="gradeBtn" class="btn secondary">Ver Calificación</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
