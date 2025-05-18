@@ -55,13 +55,13 @@ http://localhost:8000
 
 ```
 .
-├── app.py                # Servidor Flask principal
+├── app.py               # Servidor Flask principal
 ├── deque.py             # Implementación de estructura de datos Deque
 ├── init_questions.py    # Inicialización de preguntas
 ├── index.html           # Interfaz web principal
 ├── styles.css           # Estilos CSS de la interfaz
-├── app.js              # Lógica del frontend en JavaScript
-├── students_data.json  # Almacenamiento de respuestas de estudiantes
+├── app.js               # Lógica del frontend en JavaScript
+├── students_data.json   # Almacenamiento de respuestas de estudiantes
 └── questions_data.json # Base de datos de preguntas
 ```
 ## Documentación de la API
@@ -74,7 +74,7 @@ python3 app.py
 ```
 2. Accede a la documentación en tu navegador:
 ```
-http://localhost:5000/docs
+http://127.0.0.1:5000/docs
 ```
 
 ### La documentación incluye:
@@ -98,7 +98,6 @@ http://localhost:5000/docs
 - GET /questions : Obtiene la lista de preguntas disponibles
 ## Evaluación
 El sistema incluye diferentes tipos de preguntas:
-
 - Preguntas teóricas (evaluación por palabras clave)
 - Problemas de resolución (evaluación manual/automática)
 - Ejercicios de programación (evaluación automática)
