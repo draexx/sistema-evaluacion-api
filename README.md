@@ -51,6 +51,37 @@ python3 -m http.server 8000
 ```
 http://localhost:8000
 ```
+
+## Pruebas
+
+Este proyecto utiliza `pytest` para las pruebas de la API.
+
+### Instalación de Dependencias de Prueba
+
+Para ejecutar las pruebas, primero necesitas instalar las dependencias adicionales:
+
+```bash
+pip3 install pytest pytest-flask
+```
+
+Asegúrate también de que las dependencias principales del proyecto (`flask`, `flask-cors`, `flasgger`) estén instaladas como se describe en la sección [Instalación](#instalación).
+
+### Ejecución de Pruebas
+
+1.  **Inicializar la base de datos de preguntas**:
+    Si aún no lo has hecho, asegúrate de que el archivo `questions_data.json` exista. Puedes crearlo ejecutando:
+    ```bash
+    python3 init_questions.py
+    ```
+    Las pruebas intentarán crear este archivo si no existe, pero es una buena práctica tenerlo.
+
+2.  **Ejecutar Pytest**:
+    Desde el directorio raíz del proyecto, ejecuta el siguiente comando en tu terminal:
+    ```bash
+    pytest
+    ```
+    Pytest descubrirá y ejecutará automáticamente las pruebas definidas en el archivo `test_app.py`. Verás la salida de las pruebas en la consola.
+
 ## Estructura del Proyecto
 
 ```
