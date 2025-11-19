@@ -185,8 +185,47 @@ class ExamApp {
     }
 
     displayGrade(grade) {
-        alert(`Calificación total: ${grade.total_score}`);
-        // Aquí podrías mostrar un desglose más detallado de las calificaciones
+        const gradeContainer = document.getElementById('gradeContainer');
+        const gradeDetails = document.getElementById('gradeDetails');
+
+        let html = `
+            <h3>Calificación Total: ${grade.total_score}</h3>
+            <table class="grade-table">
+                <thead>
+                    <tr>
+                        <th>Pregunta</th>
+                        <th>Tu Respuesta</th>
+                        <th>Puntuación</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        for (const questionId in grade.answers) {
+            const answer = grade.answers[questionId];
+            const question = this.findQuestionById(questionId);
+            html += `
+                <tr>
+                    <td>${question.question}</td>
+                    <td>${answer.answer}</td>
+                    <td>${answer.score} / ${question.points}</td>
+                </tr>
+            `;
+        }
+
+        html += '</tbody></table>';
+        gradeDetails.innerHTML = html;
+        gradeContainer.style.display = 'block';
+    }
+
+    findQuestionById(id) {
+        for (const section in this.questions) {
+            const question = this.questions[section].find(q => q.id === id);
+            if (question) {
+                return question;
+            }
+        }
+        return null;
     }
 }
 

@@ -27,7 +27,7 @@ def client():
     app_module.students_db = {}
 
     # Cargar/recargar las preguntas desde el archivo (que ahora sabemos que existe)
-    app_module.questions_db = app_module.load_questions()
+    app_module.questions_db = app_module.load_data(app_module.QUESTIONS_FILE)
 
     with app.test_client() as client:
         yield client
@@ -111,41 +111,26 @@ def test_submit_answer_new_student(client):
         "answer": "Answer from new student"
     }
     response = client.post('/submit', json=payload)
-    assert response.status_code == 200 # La API actual permite esto
+    assert response.status_code == 403
     data = response.get_json()
-    assert data['status'] == 'success'
-
-    assert "100" in app_module.students_db
-    assert app_module.students_db["100"]["1a"]["answer"] == "Answer from new student"
+    assert data['error'] == 'Estudiante no registrado'
 
 def test_submit_answer_invalid_payload_missing_fields(client):
     """Prueba POST /submit con payload inválido (campos faltantes)"""
     # Caso 1: Falta student_id
     payload_no_student = {"question_id": "1a", "answer": "Test"}
     response = client.post('/submit', json=payload_no_student)
-    # La aplicación Flask actual podría generar un error 500 o 400 si no maneja bien los None
-    # Idealmente, debería ser un 400 Bad Request.
-    # El comportamiento actual de app.py es que fallará con un TypeError al hacer data.get('student_id') y luego usarlo.
-    # Esto resultará en un error 500 si no hay manejo de errores específico.
-    # Para hacerlo más robusto, app.py debería validar los campos.
-    # Por ahora, testearemos el comportamiento actual.
-    # La app actualmente devuelve 200 y guarda 'None' para los campos faltantes.
-    # Se debería mejorar para devolver 400.
-    assert response.status_code == 200
-    # Verificar que se almacenó None o lo que sea que la app haga.
-    # import app as app_module
-    # assert app_module.students_db[None][payload_no_student['question_id']]['answer'] == payload_no_student['answer']
-
+    assert response.status_code == 403
 
     # Caso 2: Falta question_id
     payload_no_question = {"student_id": "1", "answer": "Test"}
     response = client.post('/submit', json=payload_no_question)
-    assert response.status_code == 200 # Debería ser 400
+    assert response.status_code == 200
 
     # Caso 3: Falta answer
     payload_no_answer = {"student_id": "1", "question_id": "1a"}
     response = client.post('/submit', json=payload_no_answer)
-    assert response.status_code == 200 # Debería ser 400
+    assert response.status_code == 200
 
 # --- Pruebas para el endpoint /grade/<student_id> ---
 def test_grade_student_no_answers(client):

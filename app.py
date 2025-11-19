@@ -36,10 +36,10 @@ registered_students = {
     "20": "YOUNG ALLEN EMMA SOPHIA"
 }
 
-def load_questions():
-    """Carga las preguntas desde el archivo JSON"""
-    if os.path.exists(QUESTIONS_FILE):
-        with open(QUESTIONS_FILE, 'r', encoding='utf-8') as f:
+def load_data(filename):
+    """Carga datos desde un archivo JSON"""
+    if os.path.exists(filename):
+        with open(filename, 'r', encoding='utf-8') as f:
             return json.load(f)
     return {}
 
@@ -48,11 +48,9 @@ def save_data(data, filename):
     with open(filename, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
-# Cargar preguntas al inicio
-questions_db = load_questions()
-
-# Base de datos en memoria para las respuestas de los estudiantes
-students_db = {}
+# Cargar preguntas y respuestas al inicio
+questions_db = load_data(QUESTIONS_FILE)
+students_db = load_data(STUDENTS_FILE)
 
 # Configuración de Swagger
 swagger_config = {
@@ -137,6 +135,9 @@ def submit_answer():
     question_id = data.get('question_id')
     answer = data.get('answer')
     timestamp = time.time()
+
+    if student_id not in registered_students:
+        return jsonify({'error': 'Estudiante no registrado'}), 403
     
     if student_id not in students_db:
         students_db[student_id] = {}

@@ -105,3 +105,19 @@ select:disabled {
 #gradeBtn {
     display: none;
 }
+
+.grade-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.grade-table th, .grade-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.grade-table th {
+    background-color: #f2f2f2;
+}
